@@ -22,11 +22,11 @@ import sys
 import os
 import time
 from datetime import datetime
-import ntplib
 
 NTP_SERVER = 'cn.pool.ntp.org'
 
 def get_local_dt_from_ntp():
+    import ntplib
     c = ntplib.NTPClient()
     response = c.request(NTP_SERVER)
     ts = response.tx_time
