@@ -57,6 +57,8 @@ def main():
     for t in t_list:
         t.start()
 
+    print("On hostB(%s), visit http://127.0.0.1:%s/" % (hostB, TMP_PORT))
+
     while True:
         try:
             time.sleep(1)

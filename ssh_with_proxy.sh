@@ -7,11 +7,13 @@ ssh-copy-id -i ~/.ssh/id_rsa.pub root@machineA
 ssh -i ~/.ssh/id_rsa root@machineA
 
 
+# A/B两机器互通
 # 通过A作为跳板机登录到B机器, 认证基于A机器, 从B看也是A机器登录它
 # 如果认证想要基于本地机器，可参考下面scp命令中设置的代理转发
 ssh -t root@<A-ip> ssh root@<B-ip>
 
 
+# A/B两机器互通
 # 将A机器的文件直接从A机器上传到B机器，A到B必须已经添加known_hosts, 并支持免密登录
 scp root@<A-ip>:./tmp root@<B-ip>:./
 # 如果需要将上述命令修改为: 认证基于本地机器
@@ -36,3 +38,20 @@ ssh -N -R 远程端口:本地IP:本地端口 root@远程IP
 本地: ssh -N -L 9906:machineA:3306 root@machineA
 本地: ssh -N -R 9906:127.0.0.1:9906 root@machineB
 # 扩展: 如果将上述的3306端口改为 python -m http.server 8000 启动后的8000端口, 可以实现wget下载文件.
+
+
+
+# 服务端B不可访问外网. 但是要使用yum 安装包
+# 思路: 本地开启代理服务器,然后在本地启动远程转发,服务端设置http_proxy
+# socks proxy: https://wiki.archlinux.org/index.php/proxy_settings#Using_a_SOCKS_proxy
+# Privoxy: https://wiki.archlinux.org/index.php/Privoxy
+# squid: https://wiki.archlinux.org/index.php/squid
+# -------------------------------------------------
+本地: 使用翻墙软件/squid/squidman等(http://squidman.net/squidman/)
+本地: ssh -N -R 9906:127.0.0.1:41081 rhlog@machineB
+远程: export http_proxy=http://127.0.0.1:9906
+远程: export https_proxy=http://127.0.0.1:9906
+#----------------扩展--------------------------
+# export ftp_proxy=$http_proxy
+# export rsync_proxy=$http_proxy
+# export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
