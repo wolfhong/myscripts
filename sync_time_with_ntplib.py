@@ -35,10 +35,12 @@ def get_local_dt_from_ntp():
 
 
 def set_local_dt(dt_obj, use_ntp=False):
+    if use_ntp:
+        dt_obj = get_local_dt_from_ntp()
+
     date_str = time.strftime('%Y-%m-%d', dt_obj)
     time_str = time.strftime('%X', dt_obj)
     # time_str = time.strftime('%H:%M:%S', dt_obj)  # the same as above
-
     print('date {} and time {}'.format(date_str, time_str))
 
     if sys.platform in ['win32', 'cygwin']:
@@ -46,7 +48,7 @@ def set_local_dt(dt_obj, use_ntp=False):
     else:  # linux/linux2/darwin
         '''
         参考 http://osxdaily.com/2012/07/04/set-system-time-mac-os-x-command-line/
-        以下命令只能同步到分钟，秒会被重置为0
+        date 命令只能同步到分钟，秒会被重置为0
         如果要同步到秒，请执行 sudo ntpdate -u cn.pool.ntp.org
         '''
         if use_ntp:
@@ -57,7 +59,7 @@ def set_local_dt(dt_obj, use_ntp=False):
 
 if __name__ == '__main__':
     if len(sys.argv) <= 1:  # 没参数
-        set_local_dt(get_local_dt_from_ntp(), use_ntp=True)
+        set_local_dt(None, use_ntp=True)
         sys.exit(0)
     _arg1 = sys.argv[1]
     try:
