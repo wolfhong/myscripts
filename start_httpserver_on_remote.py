@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
 应用场景: 与ssh_with_proxy.sh 中描述的一致, 假设A/B两个机器不互通，但是本地可以访问该两机器.
