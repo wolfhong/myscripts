@@ -18,7 +18,7 @@
 import os
 import time
 from multiprocessing import Process
-from argparse import ArgumentParser
+from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
 
 def open_http_server(user, host, port, path, servport):
@@ -39,8 +39,19 @@ def remote_proxy(userB, hostB, portB, tmpport):
     os.system(cmd)
 
 
+EPILOG = \
+'''examples:
+./start_httpserver_on_remote.py --path=./ zhdev02 zhdev03
+Or:
+./start_httpserver_on_remote.py --ua=centos --ub=centos --path=./ zhdev28 zhdev30
+Or:
+./start_httpserver_on_remote.py --from=3306 zhdev28 zhdev30
+'''
+DESC = "Connecting A and B machines using C, A/B can only be connected from C. C can be localhost."
+
+
 def create_parser():
-    parser = ArgumentParser(description="Connecting A and B machines using C, A/B can only be connected from C. C can be localhost.")
+    parser = ArgumentParser(formatter_class=RawDescriptionHelpFormatter, description=DESC, epilog=EPILOG)
     parser.add_argument('hostA', action='store')
     parser.add_argument('hostB', action='store')
     parser.add_argument('--ua', dest='userA', action='store', default='root', help='userA')

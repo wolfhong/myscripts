@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+将unicode域名转为punycode域名,
+或者将punycode域名转为unicode域名.
+'''
 import sys
 
 PY3 = sys.version_info[0] == 3
@@ -10,7 +14,8 @@ def main(name):
     if not isinstance(name, unicode_type):
         name = name.decode(sys.stdin.encoding)
     byte_name = name.encode('utf8')
-    if filter(lambda x: ord(x) > 127, byte_name):
+    # if filter(lambda x: ord(x) > 127, byte_name):
+    if not all(ord(c) < 128 for c in byte_name):
         print(name.encode('idna'))
     else:
         print(byte_name.decode('idna'))
