@@ -39,8 +39,7 @@ def remote_proxy(userB, hostB, portB, tmpport):
     os.system(cmd)
 
 
-EPILOG = \
-'''examples:
+EPILOG = '''examples:
 ./start_httpserver_on_remote.py --path=./ zhdev02 zhdev03
 Or:
 ./start_httpserver_on_remote.py --ua=centos --ub=centos --path=./ zhdev28 zhdev30
