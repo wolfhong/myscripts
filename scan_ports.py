@@ -28,6 +28,8 @@ def scan_port(ip, port):
             OK_PORTS[port] = R_OK
     except BaseException:
         ERROR_PORTS[port] = R_ERROR
+    finally:
+        s.close()
 
 
 def scan_range_ports(ip, start, end):
