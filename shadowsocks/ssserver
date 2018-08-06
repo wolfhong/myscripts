@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+'''
+requirements:
+    pip install shadowsocks==2.8.2
+    or:
+    ./shadowsocks-2.8.2.tar.gz
+clients:
+    go to https://shadowsocks.org/en/download/clients.html
+    or:
+    go to my network disk
+commands:
+    python ssserver -c ./shadowsocks.json
+'''
+__requires__ = 'shadowsocks==2.8.2'
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.exit(
+        load_entry_point('shadowsocks==2.8.2', 'console_scripts', 'ssserver')()
+    )
