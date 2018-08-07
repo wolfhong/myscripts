@@ -16,7 +16,7 @@ remote_port=9906   # 远程http代理端口
 login_cmd=""       # 登录命令,可以加上-p参数
 
 function usage() {
-    echo 'usages: ./start_proxy_to_local.sh [-f localPort] [-r remotePort] user@machineA'
+    echo 'usages: ./start_proxy_to_local.sh [-l localPort] [-r remotePort] user@machineA'
 }
 
 while [ "$1" != "" ]; do
@@ -40,14 +40,14 @@ done
 cat <<EOF | ssh ${login_cmd} "cat > ./tmp_open_proxy.sh"
 export http_proxy=http://127.0.0.1:${remote_port}
 export https_proxy=http://127.0.0.1:${remote_port}
-export no_proxy="localhost,127.0.0.1"
+export no_proxy="localhost,127.0.0.1,mirrors.cmrh.com"
 EOF
 
 # 提示
 cmd="ssh -N -R ${remote_port}:127.0.0.1:${local_port} ${login_cmd}" 
 echo "run: $cmd"
 echo "在远程机器上先修改http_proxy, 执行: . tmp_open_proxy.sh"
-echo "然后就可以在远程机器上, 通过本地的${local_port}端口访问网络"
+echo "然后就可以在远程机器上, 经由本地的${local_port}端口访问网络"
 
 # 执行远程代理
 /bin/bash -c "$cmd"
