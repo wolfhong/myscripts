@@ -4,6 +4,7 @@
 参数: ip/hostname
 输出: 扫描端口,输出该地址被占用的所有端口号
 '''
+# socket.connect_ex error code: https://gist.github.com/gabrielfalcao/4216897
 from __future__ import unicode_literals
 import sys
 import time
@@ -13,6 +14,7 @@ from threading import Thread
 socket.setdefaulttimeout(2)  # 设置默认超时时间
 OK_PORTS = {}
 ERROR_PORTS = {}
+OTHER_PORTS = {}
 R_OK = 1
 R_ERROR = -1
 
@@ -26,6 +28,8 @@ def scan_port(ip, port):
         result = s.connect_ex((ip, port))
         if result == 0:
             OK_PORTS[port] = R_OK
+        else:
+            OTHER_PORTS[result] = OTHER_PORTS.setdefault(result, 0) + 1
     except BaseException:
         ERROR_PORTS[port] = R_ERROR
     finally:
@@ -54,14 +58,16 @@ def ip_scan(ip):
     page = 1
     limit = 2000  # 假设的最大同时线程数
     while True:
+        start = max(1, limit * (page-1))
         end = min(limit * page, 65535)
-        scan_range_ports(ip, limit * (page-1), end)
+        scan_range_ports(ip, start, end)
         if end >= 65535:
             break
         else:
             page += 1
     print('end scan, used %.2f seconds' % (int(time.time()) - start_time))
     print('Error ports: %s' % ERROR_PORTS.keys())
+    print('Other ports: %s' % OTHER_PORTS)
 
 
 if __name__ == '__main__':

@@ -16,7 +16,7 @@ remote_port=9906   # 远程http代理端口
 login_cmd=""       # 登录命令,可以加上-p参数
 
 function usage() {
-    echo 'usages: ./start_proxy_to_local.sh [-l localPort] [-r remotePort] user@machineA'
+    echo "usages: $0 [-l localPort] [-r remotePort] user@machineA"
 }
 
 while [ "$1" != "" ]; do

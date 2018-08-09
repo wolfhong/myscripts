@@ -26,6 +26,6 @@ def main(name):
 
 if __name__ == '__main__':
     if len(sys.argv) <= 1:
-        print("usage: domain_name_trans.py [DomainName]")
+        print("usage: %s [DomainName]" % sys.argv[0])
         sys.exit(1)
     main(sys.argv[1])

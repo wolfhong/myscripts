@@ -4,8 +4,8 @@
 # 提供IP解析的API: http://www.boip.net/
 
 function show_usage() {
-    echo "查找自己的IP地址: ./findip.sh"
-    echo "查找对方的IP地址: ./findip.sh [ip [ip]]"
+    echo "查找自己的IP地址: $0"
+    echo "查找对方的IP地址: $0 [ip [ip]]"
 }
 
 export iplist=""

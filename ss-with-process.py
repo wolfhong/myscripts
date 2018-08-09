@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+结合ss命令和grep命令, 更好的展示`ss -alntp`中的进程
+'''
 # you can also replace prettytable with https://github.com/wolfhong/PTable
+# more about ss: https://www.cyberciti.biz/tips/linux-investigate-sockets-network-connections.html
 from prettytable import PrettyTable
 import re
 import os
@@ -33,7 +37,7 @@ def main():
     pid_list = []  # use `ps -q pid -o comm=` to show all pids
     data_list = []
 
-    result = os.popen('sudo ss -nltp').read()
+    result = os.popen('sudo ss -alntp').read()
     lines = result.split('\n')
     regular = re.compile(r'\bpid=(\d+)\b')
     for i, line in enumerate(lines):
