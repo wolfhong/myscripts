@@ -19,6 +19,12 @@ function usage() {
     echo "usages: $0 [-l localPort] [-r remotePort] user@machineA"
 }
 
+if [ $# -lt 1 ]
+then
+    usage
+    exit 1
+fi
+
 while [ "$1" != "" ]; do
     case $1 in
         -l | --local )          shift

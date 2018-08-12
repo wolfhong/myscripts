@@ -16,7 +16,7 @@ Or:
 在Win系统中, 才需要使用代码来完成这部分工作.
 
 examples:
-    ./split_bigfile.py -b 20m input_filename output_prefix
+    ./split_bigfile.py -b 20m input_filename [output_prefix]
 '''
 
 
