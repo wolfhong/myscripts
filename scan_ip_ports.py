@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 '''
+Python3执行时, 效率会差很多, 未解之谜
 使用:
     ./scan_ip_ports.py all
     ./scan_ip_ports.py 22,33,44 80 9090
@@ -14,11 +15,10 @@ import sys
 import time
 import socket
 import traceback
-from threading import Thread, Semaphore
+from threading import Thread, Lock
 
 socket.setdefaulttimeout(2)  # 设置默认超时时间
-printLock = Semaphore(value=1)
-OTHER_PORTS = {}
+printLock = Lock()
 PY3 = sys.version_info[0] == 3
 
 
@@ -36,15 +36,13 @@ def _scan_one_port(ip, port):
             r = repr(s.recv(100))
             printLock.acquire()
             print("%s: %s" % (str(port).ljust(5), r))
-        else:
-            printLock.acquire()  # 否则累计会出错
-            OTHER_PORTS[result] = OTHER_PORTS.setdefault(result, 0) + 1
+            printLock.release()
     except BaseException:
         e_text = 'Error: %s' % traceback.format_exc().splitlines()[-1]
         printLock.acquire()
         print("%s: %s" % (str(port).ljust(5), e_text))
-    finally:
         printLock.release()
+    finally:
         s.close()
 
 
@@ -77,7 +75,6 @@ def scan_selected_ports(ip, port_list):
         _scan_range_ports(ip, page_ports)
         page += 1
         page_ports = port_list[(page-1)*limit: page*limit]
-    print('Other ports: %s' % OTHER_PORTS)
 
 
 def main():
