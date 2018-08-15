@@ -1,5 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+This will prompt for a password:
+    zip --encrypt file.zip files
+This is more insecure, as the password is entered/shown as plain text:
+    zip --password (password) file.zip files
+'''
 from __future__ import unicode_literals
 import sys
 import time
@@ -11,6 +17,15 @@ from argparse import ArgumentParser
 
 DESC = 'Guess the password of a zip file.'
 PY3 = sys.version_info[0] == 3
+
+
+def to_string(s):
+    if PY3:
+        return str(s)
+    else:
+        if isinstance(s, unicode):
+            return s.encode('utf8')
+        return str(s)
 
 
 def calc_time(func):
@@ -61,7 +76,7 @@ def create_args():
                 data['upper'] = True
             elif char in string.punctuation:
                 data['punctuation'] = True
-    return type(b'Auto', (object, ), data)
+    return type(to_string('Auto'), (object, ), data)
 
 
 def iter_passwords(pwdfile):
