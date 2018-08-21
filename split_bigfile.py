@@ -99,7 +99,7 @@ def main():
     parser = create_parser()
     args = parser.parse_args()
     onesize = human2bytes(args.bytecount)
-    input_filename = args.input_filename
+    input_filename = os.path.abspath(args.input_filename)
     output_prefix = args.output_prefix or input_filename
     if not os.path.isfile(input_filename):
         raise ValueError('file {} not exists'.format(input_filename))

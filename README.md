@@ -6,6 +6,7 @@
 * `guess_unzip_pwd`: 猜测zip的解压密码
 * `identify_file_or_url`: 实现Linux的`file`命令功能, 参数支持FILE, URL
 * `scan_ip_ports`: 扫描该IP上的所有端口
+* `scp_bigfile`: 大文件切割分别scp上传服务器,最后组装成源文件并校验
 * `set_time_with_ntplib.py`: 设置或同步系统时间
 * `split_bigfile`: 为Windows系统设计的切割大文件功能，类比于Linux的`split`命令
 * `ss-with-process`: 更好的展示`ss -alntp`中的进程
