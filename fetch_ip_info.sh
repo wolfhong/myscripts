@@ -1,7 +1,8 @@
 #! /bin/bash
 # -*- coding: utf-8 -*-
 # 查找IP地址信息: http://ip.chinaz.com/
-# 提供IP解析的API: http://www.boip.net/
+# 提供IP解析的API: http://www.boip.net/  https://www.ipip.net/ip.html
+# 查询IP: curl cip.cc
 
 function show_usage() {
     echo "查找自己的IP地址: $0"
@@ -11,8 +12,8 @@ function show_usage() {
 export iplist=""
 
 if [ $# -lt 1 ]; then
-    curl http://ip.chinaz.com/getip.aspx
-    echo
+    # curl http://ip.chinaz.com/getip.aspx && echo
+    curl http://icanhazip.com/
     exit
 fi
 

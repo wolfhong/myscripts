@@ -52,7 +52,7 @@ EOF
 # 提示
 cmd="ssh -N -R ${remote_port}:127.0.0.1:${local_port} ${login_cmd}" 
 echo "run: $cmd"
-echo "在远程机器上先修改http_proxy, 执行: . tmp_open_proxy.sh"
+echo "在远程机器上执行: . tmp_open_proxy.sh"
 echo "然后就可以在远程机器上, 经由本地的${local_port}端口访问网络"
 
 # 执行远程代理
